@@ -52,5 +52,6 @@ Execute the simulation:
 
 PowerShell
 go run .
+
 ✍️ Reflection
 "You don't build a skyscraper by just stacking bricks; you start by testing the strength of the steel. This sprint is about mastering the 'steel' before I build the 'elevator'."
