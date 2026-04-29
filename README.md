@@ -55,3 +55,7 @@ go run .
 
 ✍️ Reflection
 "You don't build a skyscraper by just stacking bricks; you start by testing the strength of the steel. This sprint is about mastering the 'steel' before I build the 'elevator'."
+
+### ?? Day 2 Key Takeaway
+> Today I learned that a system's capacity isn't just about how fast it can work, but how well it can queue. By using a buffered channel, I created a 'waiting room' for elevator requests, ensuring the system stays responsive even during a burst of activity.
+
