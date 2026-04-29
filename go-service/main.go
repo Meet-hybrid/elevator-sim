@@ -1,22 +1,29 @@
 package main
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 func main() {
-	userChan := make(chan Request)
-	adminChan := make(chan Request)
+	RequestQueue := make(chan Request, 5)
 
-	go StartHandler(userChan, adminChan)
+	for WorkerPool := 1; WorkerPool <= 3; WorkerPool++ {
+		go ElevatorWorker(WorkerPool, RequestQueue)
+	}
 
-	go func ()  {
-		userChan <- Request{ID: 1, Type: "USER", Content: "Requesting floor 5"}
-		
-	}()
+	for Burst := 1; Burst <= 10; Burst++ {
+		req := Request{
+			ID: Burst, Floor: Burst + 3, Type: "Normal"}
 
-	go func ()  {
-		time.Sleep(2 * time.Second)
-		adminChan <- Request{ID: 99, Type: "ADMIN", Content: "Emergency Brake Test Required"}
-	}()
+		fmt.Printf("Dispatcher: Sending Request %d to queue...\n", Burst)
+		RequestQueue <- req
 
-	time.Sleep(12 * time.Second)
+		fmt.Print("Queue Load: %d/%d\n", len(RequestQueue), cap(RequestQueue))
+
+	}
+	close(RequestQueue)
+
+	time.Sleep(10 * time.Second) // Wait for workers to finish processing
+	fmt.Println("Day 2 Lab Complete: All request processed.")
 }
